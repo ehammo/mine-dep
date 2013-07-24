@@ -6,7 +6,7 @@ Contains the source code of the algorithm for mining disjunctive emerging patter
 Configuration
 -------------
 
-After cloning/downloading the source code, make sure binary executable files in *\/bin*
+After cloning/downloading the source code, make sure binary executable files in */bin*
 are correct for your operating system. Please consider recompiling these files.
 
 
