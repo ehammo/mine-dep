@@ -25,9 +25,9 @@ import signal
 # import resource
 
 MINEDEP = 'mineDEP_tmp'
-SHD = "C:\Users\eduar\mine-dep\bin\shd"
+SHD = "/home/ess/mine-dep/src/C/shd31/shd.c"
 #SHD = "/home/renato/closed_itemsets/shd31/shd"
-LOWER_BOUND = 'C:\Users\eduar\mine-dep\src\C\lowerBound\Release\lowerBoundCPU'
+LOWER_BOUND = '/home/ess/mine-dep/src/C/lowerBound/Release/lowerBoundCPU'
 #LOWER_BOUND = '/home/renato/workspace/lowerBoundCPU/Release/lowerBoundCPU'
 
 myfiles = []
