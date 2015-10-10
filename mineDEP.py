@@ -25,9 +25,9 @@ import signal
 # import resource
 
 MINEDEP = 'mineDEP_tmp'
-SHD = "/home/ess/mine-dep/src/C/shd31/shd.c"
+SHD = "/home/ess/mine-dep/bin/shd"
 #SHD = "/home/renato/closed_itemsets/shd31/shd"
-LOWER_BOUND = '/home/ess/mine-dep/src/C/lowerBound/Release/lowerBoundCPU'
+LOWER_BOUND = '/home/ess/mine-dep/bin/lowerBoundCPU'
 #LOWER_BOUND = '/home/renato/workspace/lowerBoundCPU/Release/lowerBoundCPU'
 
 myfiles = []
@@ -50,6 +50,7 @@ def lowerBoundParam(__filein, __fileclass, __fileout):
 def lowerBound(__filein, __fileclass, __fileout):
     param = lowerBoundParam(__filein, __fileclass, __fileout)
     # p = subprocess.Popen(param,universal_newlines=True,shell=False,stderr=child_stdout, stdout=child_stdout)
+    print param
     p = subprocess.Popen(param, universal_newlines=True, shell=False)
     p.wait()
 
@@ -201,7 +202,6 @@ if __name__ == '__main__':
     offsets = computeOffset(fileName, nbPos, nbNeg)
 
     proc = Pool(processes=nbThreads)
-
     inputs = [(fileName, nbNeg, offsets[i], i) for i in range(0, nbPos)]
     try:
         results = proc.map(borderDiff, inputs)
@@ -226,4 +226,50 @@ if __name__ == '__main__':
 
     del seen
     outputFile.close()
-    
+
+    #fixing the useless columns problem
+
+
+    #step 1 discovering the real patterns
+    with open(inputFileName, 'r')  as f:
+        c=f.readline()
+    f.close()
+    pos=c.find(' ')
+    c=int(c[pos:])
+    linha=1
+    with open("newOut.txt", 'w') as newOut:
+        with open(outputName, 'r') as out:
+            for line in out:
+                x=0
+                k=0
+                resp = {}
+                pos=line.find(' ')
+                while pos!=-1:
+                    Num = line[:pos]
+                    Num = int(Num)
+                    resp[k]=Num
+                    line = line[pos+1:]
+                    pos=line.find(' ')
+                    k=k+1
+                Num = line[:pos]
+                Num = int(Num)
+                resp[k]=Num
+                max=k
+                k=0
+                erro = 0
+                while(x<c):
+                   k=0
+                   while(k<=max):
+                       if x == resp[k]:
+                           erro=1
+                           k=max
+                       k=k+1
+                   if(erro==0):
+                       newOut.write(str(x)+" ")
+                   else:
+                       erro=0
+                   x=x+1
+                newOut.write('\n')
+
+
+
